@@ -4,6 +4,9 @@ function Ball(){
     this.radius = Math.random()*15+10;
     this.acc = new JSVector(0,0);
     this.c = 'rgba(' + Math.floor(Math.random()*255) + ',' + Math.floor(Math.random()*255) + ',' + Math.floor(Math.random()*255) + ',' + .75 + ')';
+    this.phase = Math.random()*2*Math.PI//Set the current position along the wriggle to a random number
+    this.freq = Math.random()*0.5+0.25;//Set frequency (unitless) to a random #
+    this.amp = Math.random()*10;//Set amplitude (unitless) to a random #
     //this.update = function;
   }
 
@@ -15,11 +18,19 @@ function Ball(){
     this.acc.x = 0;
     this.acc.y = 0;
 
+    var wrigvec = new JSVector(1,0);
+    wrigvec.setDirection(this.vel.getDirection()+Math.PI/2)//Points vector orthogonal to travel
+    wrigvec.setMag(wrigvec.getMag()*this.amp*Math.sin(this.phase));
+    this.phase+=this.freq;
+    this.loc.add(wrigvec);
+
     if(this.loc.x + this.radius >= canvas.width || this.loc.x - this.radius <= 0){
       this.vel.x = -(this.vel.x);
+      //this.loc.x = canvas.width-this.loc.x;
     }
     if(this.loc.y + this.radius >= canvas.height || this.loc.y - this.radius <= 0){
       this.vel.y = -(this.vel.y);
+      //this.loc.y = canvas.width-this.loc.y;
     }
 
     this.render();

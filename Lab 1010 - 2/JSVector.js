@@ -8,6 +8,11 @@ function JSVector(x, y){
 	  this.x = mag*Math.cos(angle);
 	  this.y = mag*Math.sin(angle);
 	} 		//  set the magnitude of a vector
+	JSVector.prototype.setTh = function(th){
+		let m = this.getMag();
+		this.x = m*Math.cos(th);
+		this.y = m*Math.sin(th);
+	}
 	JSVector.prototype.getMag = function(){
 	  return Math.sqrt(this.x*this.x + this.y*this.y);
 	}		//  get the magnitude of a vector
